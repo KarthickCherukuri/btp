@@ -1,16 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 // import { io } from "socket.io-client";
 // import SensorListner from "./SensorListner";
@@ -31,9 +19,39 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //   });
 //   io.attach(3000);
 // }
-const sampleMeasure_1 = __importDefault(require("./sampleMeasure"));
-const check = () => __awaiter(void 0, void 0, void 0, function* () {
-    const distance = yield (0, sampleMeasure_1.default)();
-    console.log(distance);
+const pigpio_1 = require("pigpio");
+// Define the GPIO pins connected to the HC-SR04
+const triggerPin = 17; // GPIO pin for the trigger
+const echoPin = 18; // GPIO pin for the echo
+// Set up trigger and echo pins
+const trigger = new pigpio_1.Gpio(triggerPin, { mode: pigpio_1.Gpio.OUTPUT });
+const echo = new pigpio_1.Gpio(echoPin, { mode: pigpio_1.Gpio.INPUT, alert: true });
+// Function to calculate distance from time
+function calculateDistance(time) {
+    // Calculate distance in cm (speed of sound is approximately 34300 cm/s)
+    return (time * 34300) / 2;
+}
+// Set up an alert when the echo pin changes (rising edge = signal received)
+let startTick;
+echo.on("alert", (level, tick) => {
+    if (level === 1) {
+        // Rising edge (signal received)
+        startTick = tick;
+    }
+    else {
+        // Falling edge (signal has returned)
+        const endTick = tick;
+        const timeElapsed = endTick - startTick;
+        const distance = calculateDistance(timeElapsed);
+        console.log(`Distance: ${distance.toFixed(2)} cm`);
+    }
 });
-check();
+// Function to trigger the ultrasonic pulse
+function triggerPulse() {
+    trigger.digitalWrite(1); // Send trigger pulse
+    setTimeout(() => {
+        trigger.digitalWrite(0); // Stop pulse after 10 microseconds
+    }, 10);
+}
+// Trigger pulse every 500ms
+setInterval(triggerPulse, 500);
