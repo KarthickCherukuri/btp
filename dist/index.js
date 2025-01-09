@@ -27,6 +27,7 @@ const echo = new pigpio_1.Gpio(18, { mode: pigpio_1.Gpio.INPUT, alert: true });
 trigger.digitalWrite(0); // Make sure trigger is low
 const watchHCSR04 = () => {
     let startTick;
+    console.log("watching");
     echo.on("alert", (level, tick) => {
         if (level == 1) {
             startTick = tick;

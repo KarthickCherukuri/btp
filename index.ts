@@ -29,7 +29,7 @@ trigger.digitalWrite(0); // Make sure trigger is low
 
 const watchHCSR04 = () => {
   let startTick: any;
-
+  console.log("watching");
   echo.on("alert", (level, tick) => {
     if (level == 1) {
       startTick = tick;
