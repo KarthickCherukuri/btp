@@ -16,4 +16,8 @@ export default class SocketHandler {
   attachEventListner = (tag: string, listner: (data?: any) => void) => {
     this.socket.on(tag, listner);
   };
+
+  emit = (tag: string, data: any) => {
+    this.socket.emit(tag, data);
+  };
 }

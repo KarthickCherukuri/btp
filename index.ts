@@ -1,9 +1,25 @@
-import { io } from "socket.io-client";
-import SensorListner from "./SensorListner";
-// const socket = io("https://my-service-210340603369.asia-south1.run.app");
-
-// socket.emit("test", "Hello World");
-// socket.on("test-response", (data) => {
-//   console.log(data);
-// });
-const sensorListner = new SensorListner();
+// import { io } from "socket.io-client";
+// import SensorListner from "./SensorListner";
+// import { role } from "./types";
+// import { Server } from "socket.io";
+// import SocketHandler from "./SocketHandler";
+// let serverRole: role = "slave";
+// console.log(serverRole);
+// if (serverRole === "slave") {
+//   const sensorListner = new SensorListner(serverRole);
+// } else {
+//   const io = new Server();
+//   const SocketToMain: SocketHandler = new SocketHandler();
+//   io.on("connection", (socket) => {
+//     socket.on("sensor-data", (data) => {
+//       SocketToMain.emit("sensor-data", data);
+//     });
+//   });
+//   io.attach(3000);
+// }
+import measureDistance from "./sampleMeasure";
+const check = async () => {
+  const distance = await measureDistance();
+  console.log(distance);
+};
+check();
