@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 // import { io } from "socket.io-client";
 // import SensorListner from "./SensorListner";
 // import { role } from "./types";
@@ -19,6 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //   });
 //   io.attach(3000);
 // }
+Object.defineProperty(exports, "__esModule", { value: true });
 const pigpio_1 = require("pigpio");
 // The number of microseconds it takes sound to travel 1cm at 20 degrees celcius
 const MICROSECDONDS_PER_CM = 1e6 / 34321;
@@ -27,15 +27,19 @@ const echo = new pigpio_1.Gpio(24, { mode: pigpio_1.Gpio.INPUT, alert: true });
 trigger.digitalWrite(0); // Make sure trigger is low
 const watchHCSR04 = () => {
     let startTick;
-    console.log("watching");
+    console.log("Watching for ultrasonic signals...");
     echo.on("alert", (level, tick) => {
-        if (level == 1) {
+        console.log(`Alert triggered: level=${level}, tick=${tick}`);
+        if (level === 1) {
+            console.log("Rising edge detected");
             startTick = tick;
         }
         else {
+            console.log("Falling edge detected");
             const endTick = tick;
-            const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-            console.log(diff / 2 / MICROSECDONDS_PER_CM);
+            const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32-bit arithmetic
+            const distance = diff / 2 / MICROSECDONDS_PER_CM;
+            console.log(`Distance: ${distance.toFixed(2)} cm`);
         }
     });
 };

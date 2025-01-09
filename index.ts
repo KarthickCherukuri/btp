@@ -17,6 +17,7 @@
 //   });
 //   io.attach(3000);
 // }
+
 import { Gpio } from "pigpio";
 
 // The number of microseconds it takes sound to travel 1cm at 20 degrees celcius
@@ -29,14 +30,20 @@ trigger.digitalWrite(0); // Make sure trigger is low
 
 const watchHCSR04 = () => {
   let startTick: any;
-  console.log("watching");
+  console.log("Watching for ultrasonic signals...");
+
   echo.on("alert", (level, tick) => {
-    if (level == 1) {
+    console.log(`Alert triggered: level=${level}, tick=${tick}`);
+
+    if (level === 1) {
+      console.log("Rising edge detected");
       startTick = tick;
     } else {
+      console.log("Falling edge detected");
       const endTick = tick;
-      const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-      console.log(diff / 2 / MICROSECDONDS_PER_CM);
+      const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32-bit arithmetic
+      const distance = diff / 2 / MICROSECDONDS_PER_CM;
+      console.log(`Distance: ${distance.toFixed(2)} cm`);
     }
   });
 };
