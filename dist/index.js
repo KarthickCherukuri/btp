@@ -22,8 +22,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pigpio_1 = require("pigpio");
 // The number of microseconds it takes sound to travel 1cm at 20 degrees celcius
 const MICROSECDONDS_PER_CM = 1e6 / 34321;
-const trigger = new pigpio_1.Gpio(17, { mode: pigpio_1.Gpio.OUTPUT });
-const echo = new pigpio_1.Gpio(18, { mode: pigpio_1.Gpio.INPUT, alert: true });
+const trigger = new pigpio_1.Gpio(23, { mode: pigpio_1.Gpio.OUTPUT });
+const echo = new pigpio_1.Gpio(24, { mode: pigpio_1.Gpio.INPUT, alert: true });
 trigger.digitalWrite(0); // Make sure trigger is low
 const watchHCSR04 = () => {
     let startTick;
