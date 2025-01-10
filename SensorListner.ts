@@ -18,7 +18,7 @@ export default class SensorListner {
     this.watchHCSR04();
     setInterval(() => {
       trigger.trigger(10, 1); // Set trigger high for 10 microseconds
-    }, 100);
+    }, 2000);
   }
 
   watchHCSR04 = () => {
