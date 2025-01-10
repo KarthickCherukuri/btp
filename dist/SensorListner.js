@@ -26,7 +26,7 @@ class SensorListner {
                     const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32-bit arithmetic
                     const distance = diff / 2 / MICROSECDONDS_PER_CM;
                     console.log(`Distance: ${distance.toFixed(2)} cm`);
-                    this.socket.emit("data-received", distance);
+                    this.socket.emit("data-recieved", distance);
                 }
             });
         };
