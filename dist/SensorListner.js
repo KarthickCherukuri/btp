@@ -13,23 +13,20 @@ class SensorListner {
     constructor(serverRole) {
         this.watchHCSR04 = () => {
             let startTick;
-            console.log("Watching for ultrasonic signals...");
-            echo.on("interrupt", (...t) => {
-                console.log(t);
-            });
+            // console.log("Watching for ultrasonic signals...");
             echo.on("alert", (level, tick) => {
-                console.log(`Alert triggered: level=${level}, tick=${tick}`);
+                // console.log(`Alert triggered: level=${level}, tick=${tick}`);
                 if (level === 1) {
-                    console.log("Rising edge detected");
+                    // console.log("Rising edge detected");
                     startTick = tick;
                 }
                 else {
-                    console.log("Falling edge detected");
+                    // console.log("Falling edge detected");
                     const endTick = tick;
                     const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32-bit arithmetic
                     const distance = diff / 2 / MICROSECDONDS_PER_CM;
                     console.log(`Distance: ${distance.toFixed(2)} cm`);
-                    this.socket.emit("data-received", { distance });
+                    this.socket.emit("data-received", distance);
                 }
             });
         };

@@ -16,6 +16,7 @@ class SocketHandler {
         this.socket.on("error", (error) => {
             console.error("socket error", error);
         });
+        this.socket.on("sensor-data-middleware", (data) => console.debug("sensor-data-middleware", data));
     }
 }
 exports.default = SocketHandler;
