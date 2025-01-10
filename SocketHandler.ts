@@ -7,6 +7,10 @@ export default class SocketHandler {
     this.socket = io(
       url || "https://my-service-210340603369.asia-south1.run.app"
     );
+
+    this.socket.on("error", (error) => {
+      console.error("socket error", error);
+    });
   }
 
   checkConnection = () => {
