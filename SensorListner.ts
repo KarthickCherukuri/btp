@@ -33,6 +33,9 @@ export default class SensorListner {
         console.log("data from slave", data);
         this.socket.emit("data-recieved", data);
       });
+      socket.on("test-response", () => {
+        socket.emit("hello my slave");
+      });
     });
     this.io.attach(3000);
     console.log("master socket started");
