@@ -1,6 +1,7 @@
 import SocketHandler from "./SocketHandler";
 import { role } from "./types";
 import { Gpio } from "pigpio";
+import { Server } from "socket.io";
 const MICROSECDONDS_PER_CM = 1e6 / 34321;
 const trigger = new Gpio(7, { mode: Gpio.OUTPUT });
 const echo = new Gpio(18, { mode: Gpio.INPUT, alert: true });
@@ -8,6 +9,7 @@ trigger.digitalWrite(0); // Make sure trigger is low
 export default class SensorListner {
   public socket: SocketHandler;
   private serverRole: role;
+  private io?: Server;
   constructor(serverRole: role) {
     this.socket = new SocketHandler();
     this.serverRole = serverRole;
@@ -15,11 +17,29 @@ export default class SensorListner {
       console.log("test response", data);
     });
     this.socket.checkConnection();
-    this.watchHCSR04();
-    setInterval(() => {
-      trigger.trigger(10, 1); // Set trigger high for 10 microseconds
-    }, 2000);
+    this.setup();
   }
+
+  setUpMaster = () => {
+    this.io = new Server();
+    this.io.on("connection", (socket) => {
+      socket.on("data-recieved", (data) => {
+        this.socket.emit("data-recieved", data);
+      });
+    });
+    this.io.attach(3000);
+  };
+
+  setup = () => {
+    if (this.serverRole === "slave") {
+      this.watchHCSR04();
+      setInterval(() => {
+        trigger.trigger(10, 1); // Set trigger high for 10 microseconds
+      }, 2000);
+    } else {
+      this.setUpMaster();
+    }
+  };
 
   watchHCSR04 = () => {
     let startTick: any;

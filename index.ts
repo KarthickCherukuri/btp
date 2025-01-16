@@ -18,3 +18,4 @@ import SensorListner from "./SensorListner";
 //   io.attach(3000);
 // }
 new SensorListner("master");
+// new SensorListner("slave");
