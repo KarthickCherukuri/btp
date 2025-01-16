@@ -65,7 +65,7 @@ class SensorListner {
                 }
             });
         };
-        this.socket = new SocketHandler_1.default(serverRole === "slave" ? "https://192.168.165.169:3000" : undefined);
+        this.socket = new SocketHandler_1.default(serverRole === "slave" ? "https://192.168.165.28:3000" : undefined);
         this.serverRole = serverRole;
         this.socket.attachEventListner("test-response", (data) => {
             console.log("test response", data);
