@@ -21,6 +21,7 @@ class SensorListner {
                 });
             });
             this.io.attach(3000);
+            console.log("master socket started");
         };
         this.setup = () => {
             if (this.serverRole === "slave") {

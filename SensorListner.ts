@@ -31,6 +31,7 @@ export default class SensorListner {
       });
     });
     this.io.attach(3000);
+    console.log("master socket started");
   };
 
   setup = () => {
