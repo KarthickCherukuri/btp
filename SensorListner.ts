@@ -23,7 +23,11 @@ export default class SensorListner {
   }
 
   setUpMaster = () => {
-    this.io = new Server();
+    this.io = new Server({
+      cors: {
+        origin: "*",
+      },
+    });
     this.io.on("connection", (socket) => {
       socket.on("data-recieved", (data) => {
         console.log("data from slave", data);

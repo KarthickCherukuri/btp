@@ -13,7 +13,11 @@ trigger.digitalWrite(0); // Make sure trigger is low
 class SensorListner {
     constructor(serverRole) {
         this.setUpMaster = () => {
-            this.io = new socket_io_1.Server();
+            this.io = new socket_io_1.Server({
+                cors: {
+                    origin: "*",
+                },
+            });
             this.io.on("connection", (socket) => {
                 socket.on("data-recieved", (data) => {
                     console.log("data from slave", data);
