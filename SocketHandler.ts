@@ -7,7 +7,6 @@ export default class SocketHandler {
     this.socket = io(
       url || "https://my-service-210340603369.asia-south1.run.app"
     );
-
     this.socket.on("error", (error) => {
       console.error("socket error", error);
     });
@@ -15,6 +14,12 @@ export default class SocketHandler {
     this.socket.on("sensor-data-middleware", (data) =>
       console.debug("sensor-data-middleware", data)
     );
+    this.socket.on("disconnect", () => {
+      console.log(
+        "socket disconnected",
+        url || "https://my-service-210340603369.asia-south1.run.app"
+      );
+    });
   }
 
   checkConnection = () => {

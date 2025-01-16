@@ -17,6 +17,9 @@ class SocketHandler {
             console.error("socket error", error);
         });
         this.socket.on("sensor-data-middleware", (data) => console.debug("sensor-data-middleware", data));
+        this.socket.on("disconnect", () => {
+            console.log("socket disconnected", url || "https://my-service-210340603369.asia-south1.run.app");
+        });
     }
 }
 exports.default = SocketHandler;
