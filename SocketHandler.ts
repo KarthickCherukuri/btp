@@ -11,7 +11,10 @@ export default class SocketHandler {
       console.error("socket error", error);
     });
     this.socket.on("connect", () => {
-      console.log("connected to socket");
+      console.log(
+        "connected to socket",
+        url || "https://my-service-210340603369.asia-south1.run.app"
+      );
     });
 
     this.socket.on("sensor-data-middleware", (data) =>

@@ -45,9 +45,9 @@ export default class SensorListner {
     if (this.serverRole === "slave") {
       try {
         this.watchHCSR04();
-        setInterval(() => {
-          trigger.trigger(10, 1); // Set trigger high for 10 microseconds
-        }, 2000);
+        // setInterval(() => {
+        //   trigger.trigger(10, 1); // Set trigger high for 10 microseconds
+        // }, 2000);
       } catch (e) {
         console.error("error in slave", e);
       }
