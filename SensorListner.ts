@@ -11,7 +11,9 @@ export default class SensorListner {
   private serverRole: role;
   private io?: Server;
   constructor(serverRole: role) {
-    this.socket = new SocketHandler();
+    this.socket = new SocketHandler(
+      serverRole === "slave" ? "https://192.168.165.169:3000" : undefined
+    );
     this.serverRole = serverRole;
     this.socket.attachEventListner("test-response", (data: string) => {
       console.log("test response", data);

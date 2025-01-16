@@ -23,4 +23,4 @@ const SensorListner_1 = __importDefault(require("./SensorListner"));
 //   io.attach(3000);
 // }
 new SensorListner_1.default("master");
-// new SensorListner("slave");
+new SensorListner_1.default("slave");
