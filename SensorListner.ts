@@ -26,6 +26,7 @@ export default class SensorListner {
     this.io = new Server();
     this.io.on("connection", (socket) => {
       socket.on("data-recieved", (data) => {
+        console.log("data from slave", data);
         this.socket.emit("data-recieved", data);
       });
     });

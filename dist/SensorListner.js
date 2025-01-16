@@ -16,6 +16,7 @@ class SensorListner {
             this.io = new socket_io_1.Server();
             this.io.on("connection", (socket) => {
                 socket.on("data-recieved", (data) => {
+                    console.log("data from slave", data);
                     this.socket.emit("data-recieved", data);
                 });
             });
