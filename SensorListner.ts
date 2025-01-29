@@ -12,7 +12,7 @@ export default class SensorListner {
   private io?: Server;
   constructor(serverRole: role) {
     this.socket = new SocketHandler(
-      serverRole === "slave" ? "http://10.10.145.155:3000" : undefined
+      serverRole === "slave" ? "http://10.10.145.29:3000" : undefined
     );
     this.serverRole = serverRole;
     this.socket.attachEventListner("test-response", (data: string) => {
