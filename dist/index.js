@@ -22,5 +22,7 @@ const SensorListner_1 = __importDefault(require("./SensorListner"));
 //   });
 //   io.attach(3000);
 // }
-new SensorListner_1.default("master");
-new SensorListner_1.default("slave");
+const args = process.argv.slice(2);
+const serverRole = args[0];
+const ipAddress = args[1];
+new SensorListner_1.default(serverRole, ipAddress);

@@ -11,7 +11,7 @@ const trigger = new pigpio_1.Gpio(7, { mode: pigpio_1.Gpio.OUTPUT });
 const echo = new pigpio_1.Gpio(18, { mode: pigpio_1.Gpio.INPUT, alert: true });
 trigger.digitalWrite(0); // Make sure trigger is low
 class SensorListner {
-    constructor(serverRole) {
+    constructor(serverRole, ipAddress) {
         this.setUpMaster = () => {
             this.io = new socket_io_1.Server({
                 cors: {
@@ -65,7 +65,7 @@ class SensorListner {
                 }
             });
         };
-        this.socket = new SocketHandler_1.default(serverRole === "slave" ? "http://10.10.145.155:3000" : undefined);
+        this.socket = new SocketHandler_1.default(ipAddress);
         this.serverRole = serverRole;
         this.socket.attachEventListner("test-response", (data) => {
             console.log("test response", data);

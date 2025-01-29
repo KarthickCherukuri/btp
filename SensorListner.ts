@@ -10,10 +10,8 @@ export default class SensorListner {
   public socket: SocketHandler;
   private serverRole: role;
   private io?: Server;
-  constructor(serverRole: role) {
-    this.socket = new SocketHandler(
-      serverRole === "slave" ? "http://10.10.145.29:3000" : undefined
-    );
+  constructor(serverRole: role, ipAddress?: string) {
+    this.socket = new SocketHandler(ipAddress);
     this.serverRole = serverRole;
     this.socket.attachEventListner("test-response", (data: string) => {
       console.log("test response", data);

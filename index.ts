@@ -1,5 +1,6 @@
 // import { io } from "socket.io-client";
 import SensorListner from "./SensorListner";
+import { role } from "./types";
 // import { role } from "./types";
 // import { Server } from "socket.io";
 // import SocketHandler from "./SocketHandler";
@@ -17,5 +18,9 @@ import SensorListner from "./SensorListner";
 //   });
 //   io.attach(3000);
 // }
-new SensorListner("master");
-new SensorListner("slave");
+
+const args = process.argv.slice(2);
+const serverRole = args[0] as role;
+const ipAddress = args[1];
+
+new SensorListner(serverRole, ipAddress);
