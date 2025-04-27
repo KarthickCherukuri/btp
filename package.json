@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "npm run build && nodemon dist/index.js"
+    "dev": "npm run build && nodemon dist/index.js",
+    "ready": "npm run build && git add . && git reset node_modules"
   },
   "keywords": [],
   "author": "",
@@ -14,11 +15,16 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
+    "hc-sr04": "^0.0.1",
+    "onoff": "^6.0.3",
+    "pigpio": "^3.3.1",
+    "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.5",
+    "@types/pigpio": "^1.2.2",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
